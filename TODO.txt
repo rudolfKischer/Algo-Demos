@@ -1,0 +1,28 @@
+
+-node.js - import organization
+    -algorithms
+    -util
+    -spectrum functions
+    -html js index page
+
+-add navigation bar at top
+
+-black and white , visualization
+        -include color for array access
+        -color for correct
+        -color for comparison
+        
+
+-implement quick sort
+-implement heap sort
+-implement insertion sort
+-implement selection sort
+
+-add description for each sorting algorithm
+
+-add an element for a table of complexities
+
+-add colour scheming using tri colour wave
+
+
+-add 

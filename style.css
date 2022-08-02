@@ -1,0 +1,36 @@
+* { 
+	box-sizing: border-box;
+}
+html, body {
+	min-height: 100%;
+	background: pink;
+	color: 	lightcoral;
+    font-family: Arial, "Courier New", monospace;
+}
+
+/* sets the body height of the browser, so that backgrounds and div heights work correctly. Color and background will almost certainly be altered; they are just placeholders */
+
+body {
+	font-size: 1.4rem;
+	text-rendering: optimizeLegibility;
+}
+
+p1 {
+	font-family: Arial, "Courier New", monospace;
+}
+
+.Box {
+    
+    margin: 4px;
+    padding: 4px;
+    /* border: 1px solid black; */
+    background-color: #000;
+}
+
+#screen {
+	background-color: lightcoral;;
+	margin: 0;
+	padding: 0;
+}
+
+/* sets the base font size for the document; turns on kerning pairs and ligatures */
