@@ -5,7 +5,46 @@ import * as ut from '../util.js';
 
 let arrStates = new ls.List();
 
+let red = [255,0,0];
+let blue = [0,0,255]
+let readColor = red;
+let swapColor = red;
+let writeColor = red;
+let compareColor = red;
 
+//to be used for
+
+//mark that the array was read and store it in the list of array states
+function markRead(i){
+    let state = {
+        color: readColor,
+        index: i,
+        val: null
+    };
+    arrStates.addB(state);
+}
+
+//
+function markWrite(arr,i){
+    let state = {
+        array: [...arr],
+        color: writeColor,
+        index: i,
+        val: arr[i]
+    };
+    arrStates.addB(state);
+}
+
+function markCompare(i,j){
+    markRead(i);
+    markRead(j);
+    let state = {
+        color: compareColor,
+        index: i,
+        val: null
+    };
+
+}
 
 
 function bubbleSort(arr){
@@ -76,6 +115,8 @@ function mergeArr(arr,beg,mid,end){
     }
     
 }
+
+
 
 
 function mergeSortAux(arr,beg,end){

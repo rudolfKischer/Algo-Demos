@@ -24,20 +24,24 @@ let delay = 10;
 var c = screen.getContext("2d");
 const HEIGHT = window.innerHeight*0.7;
 
+function drawArrItem(arr, i, colr){
+    let per = (arr[i]+1)/arr.length;
+    let width = window.innerWidth/arr.length;
+    let height = HEIGHT*per+HEIGHT*0.25;
+    let x = i * width;
+    let y = innerHeight-(height);
+    c.fillStyle = 'rgba(' + colr[0] + ',' + colr[1] + ',' + colr[2] + ',' + 1 + ')';
+    c.fillRect(x,y,width,height);
+}
+
 function drawArr(arr,spectrum = rainbow){
     for(let i = 0; i < arr.length; i++){
         let per = (arr[i]+1)/arr.length;
-        let width = window.innerWidth/arr.length;
-        let height = HEIGHT*per+HEIGHT*0.25;
-        let x = i * width;
-        let y = innerHeight-(height);
-        let col = spectrum(per);
-        c.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + 1 + ')';
-        c.fillRect(x,y,width,height);
+        let colr = spectrum(per);
+        drawArrItem(arr, i, colr)
     }
 }
 
-     
 
 spectrums.forEach(spectrum => {
     let newOption = document.createElement('option');
