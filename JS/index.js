@@ -11,7 +11,7 @@ let randomGradient = getRandomGradientFunc();
 let spectrums = [rainbow,randomGradient,greyScale]
 
 
-let sorters = [srt.mergeSort,srt.bubbleSort];
+let sorters = [srt.mergeSort,srt.bubbleSort,srt.quickSort];
 let states = srt.arrStates;
 
 var screen = document.getElementById("screen");

@@ -72,8 +72,9 @@ function mergeArr(arr,beg,mid,end){
     }
     for(let i = 0;i<(end-beg);i++){
         arr[beg+i] = result[i];
+        arrStates.addB([...arr]);
     }
-    return result;
+    
 }
 
 
@@ -83,7 +84,6 @@ function mergeSortAux(arr,beg,end){
         mergeSortAux(arr,beg,mid);
         mergeSortAux(arr,mid,end);
         mergeArr(arr,beg,mid,end);
-        arrStates.addB([...arr]);
     }
     return arr;
 }
@@ -97,4 +97,42 @@ function mergeSort(arr){
     
 }
 
-export { mergeSort, bubbleSort, arrStates };
+function partition(arr,left,right){
+    
+    let pivotIndex = right;
+    let pivot = arr[pivotIndex];
+    let pntrL = left;
+    let pntrR = right;
+    
+    while(pntrL <= pntrR){
+        let numL = arr[pntrL];
+        let numR = arr[pntrR];
+        if(numL > pivot && numR < pivot){
+            ut.swap(arr,pntrL,pntrR);
+        }
+
+        if(numL <= pivot){
+            pntrL ++;
+        }
+        if(numR >= pivot){
+            pntrR --;
+        }
+        arrStates.addB([...arr]);
+    }
+    ut.swap(arr,pivotIndex,pntrL)
+    return pntrL;
+}
+
+function quickSortAux(arr,l,r){
+    if(l < r && r>0){
+        let pivot = partition(arr,l,r);
+        quickSortAux(arr,l,pivot-1);
+        quickSortAux(arr,pivot,r);
+    }
+}
+
+function quickSort(arr){
+    quickSortAux(arr,0,(arr.length-1));
+}
+
+export { mergeSort, bubbleSort, arrStates, partition, quickSort };
