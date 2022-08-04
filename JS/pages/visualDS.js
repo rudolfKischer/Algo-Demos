@@ -26,7 +26,7 @@ function calcNodeSize(scl){
     return scaled/2;
 }
 
-function Node(x, y, scl, element){
+function dNode(x, y, scl, element){
     this.element = element;
     this.position = {
         x: x,
@@ -43,6 +43,28 @@ function Node(x, y, scl, element){
         return scaled/2;
     }
     
+    
+
+    this.displayConnections = function(){
+        
+        let posx = this.position['x'];
+        let posy = this.position['y'];
+
+        function drawLink(node, i){
+            
+            
+            c.beginPath();
+            c.moveTo(posx, posy);
+            // console.log(this.element.position['x']);
+            c.lineTo(node.element.position['x'], node.element.position['y']);
+            c.fillStyle = 'black';
+            c.stroke();
+            
+        }
+
+        this.links.iterate(drawLink);
+    }
+
     this.display = function(){
         let size = this.calcSize();
         c.beginPath();
@@ -67,24 +89,7 @@ function Node(x, y, scl, element){
     }
 }
 
-function displayNode(x,y,scl,element){
-    let size = calcNodeSize(scl);
-    c.beginPath();
-    c.arc(x, y, size, 0, 2 * Math.PI);
-    let colr = nodeColor;
-    c.fillStyle = `rgba(${colr[0]},${colr[1]},${colr[2]},1)`;
-    c.fill();
-    c.stroke();
 
-
-    let fontSize = size/2;
-    let dsplcd = fontSize/4;
-    let stringSize = element.toString().length;
-    c.font = `${fontSize}px Arial`;
-    c.fillStyle = 'black';
-    c.fillText(element,x-(dsplcd*stringSize),y+dsplcd)
-
-}
 
 
 
@@ -94,7 +99,7 @@ function displayList(list){
     let centerH = screen.height/2;
     let nodeScl = 1/numberOfNodes;
     let nodeSize = calcNodeSize(nodeScl)*2;
-    let lineLength = nodeSize * 0.25
+    let lineLength = nodeSize * 0.2
 
     c.clearRect(0,0, window.innerWidth, window.innerHeight);
     function listDisplayNode(node, i){
@@ -102,36 +107,49 @@ function displayList(list){
         let nodeListLength = (numberOfNodes * nodeSize) + ((numberOfNodes-1) * lineLength);
         let posStrt = centerW - (nodeListLength/2);
         let posX = posStrt + (i*nodeSize) + (i * lineLength);
-        let posNxtX = posStrt + ((i+1)*nodeSize) + ((i+1) * lineLength);
 
+        let newNode = new dNode(posX,centerH,nodeScl,elmt);
+
+        
         if(node.next.next != null){
-            c.beginPath();
-            c.moveTo(posX, centerH);
-            c.lineTo(posNxtX, centerH);
-            c.stroke();
+            i++;
+            let nextNode = listDisplayNode(node.next, i); 
+            newNode.addLink(nextNode);
         }
+        newNode.displayConnections();
+        newNode.display();
+        return newNode;
 
-        displayNode(posX,centerH,nodeScl,elmt);
+        
     }
 
-    list.iterate(listDisplayNode);
+    // I dont know what your doing here
+    // should make the node list into display node list
+    // then display connections
+    //then display each node
+
+    let head = listDisplayNode(list.getHead(), 0);
+
+
 
 }
 
-let n = 40;
+let n = 20;
 
 let arr = ut.getRandomArray(n).map(x => x * n);
 let lst = ls.makeList(arr);
-lst.print();
+// lst.print();
 
 function animate() {
     
 
-    displayList(lst);
+    
     if(lst.size > 10){
-
+        
         lst.popB();
     }
+
+
     setTimeout(window.requestAnimationFrame,delay,animate);
 }
 
@@ -139,7 +157,7 @@ function animate() {
 
 setScreen();
 
-
+displayList(lst);
 
 
 animate();

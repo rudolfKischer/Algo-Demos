@@ -10,6 +10,10 @@ function List(){
     this.head.next = this.tail;
     this.size = 0;
 
+    this.getHead = function(){
+        return this.head.next;
+    }
+
     this.addB = function(element) {
         let newNode = new Node(this.tail.prev,this.tail,element);
         this.tail.prev.next = newNode;
