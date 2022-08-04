@@ -9,7 +9,7 @@ let red = [255,0,0];
 let blue = [0,0,255]
 let readColor = red;
 let swapColor = red;
-let writeColor = red;
+let writeColor = blue;
 let compareColor = red;
 
 //to be used for
@@ -25,12 +25,11 @@ function markRead(i){
 }
 
 //
-function markWrite(arr,i){
+function markWrite(val,i){
     let state = {
-        array: [...arr],
         color: writeColor,
         index: i,
-        val: arr[i]
+        val: val
     };
     arrStates.addB(state);
 }
@@ -38,21 +37,23 @@ function markWrite(arr,i){
 function markCompare(i,j){
     markRead(i);
     markRead(j);
-    let state = {
-        color: compareColor,
-        index: i,
-        val: null
-    };
+}
 
+function markSwap(arr,i,j){
+    markRead(i);
+    markRead(j);
+    markWrite(arr[j],j);
+    markWrite(arr[i],i);
 }
 
 
 function bubbleSort(arr){
     for(let i=0; i<arr.length; i++){
         for(let j=0; j<arr.length - i - 1; j++){
+            markCompare(j,j+1);
             if(arr[j]>arr[j+1]){
                 ut.swap(arr,j,j+1);
-                arrStates.addB([...arr])
+                markSwap(arr,j,j+1);
             }
         } 
     }
@@ -90,28 +91,34 @@ function mergeArr(arr,beg,mid,end){
     while(pntr1 < mid && pntr2 < end){
         //console.log(pntr1)
         //console.log(pntr2)
+        markCompare(pntr1,pntr2);
         if(arr[pntr1] < arr[pntr2]){
+            markRead(pntr1);
             result[pntrR] = arr[pntr1];
             pntr1++;
         }else{
+            markRead(pntr2);
             result[pntrR] = arr[pntr2];
             pntr2++;
         }
         pntrR++;
     }
     while(pntr1 < mid){
+        markRead(pntr1);
         result[pntrR] = arr[pntr1];
             pntr1++;
             pntrR++;
     }
     while(pntr2 < end){
+        markRead(pntr2)
         result[pntrR] = arr[pntr2];
             pntr2++;
             pntrR++;
     }
     for(let i = 0;i<(end-beg);i++){
+        
+        markWrite(result[i],(beg+i))
         arr[beg+i] = result[i];
-        arrStates.addB([...arr]);
     }
     
 }
@@ -141,15 +148,21 @@ function mergeSort(arr){
 function partition(arr,left,right){
     
     let pivotIndex = right;
+    markRead(pivotIndex);
     let pivot = arr[pivotIndex];
     let pntrL = left;
     let pntrR = right;
     
     while(pntrL <= pntrR){
+        markRead(pntrL);
         let numL = arr[pntrL];
+        markRead(pntrR);
         let numR = arr[pntrR];
+
+
         if(numL > pivot && numR < pivot){
             ut.swap(arr,pntrL,pntrR);
+            markSwap(arr,pntrL,pntrR);
         }
 
         if(numL <= pivot){
@@ -158,9 +171,10 @@ function partition(arr,left,right){
         if(numR >= pivot){
             pntrR --;
         }
-        arrStates.addB([...arr]);
+        
     }
-    ut.swap(arr,pivotIndex,pntrL)
+    ut.swap(arr,pivotIndex,pntrL);
+    markSwap(arr,pivotIndex,pntrL);
     return pntrL;
 }
 

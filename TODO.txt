@@ -25,4 +25,14 @@
 -add colour scheming using tri colour wave
 
 
--add 
+-add a randomize array button
+-when a new sorting algorithm is triggered , do not re randomize, simply start using the new algorithm on the current array 
+-add a stop button for the animation
+-add a click through button for the animation
+
+
+-create a navigation bar
+    -making a directory for pages
+    -make a js function for generating the nav bar 
+        -include smart paths for pages
+    -make a place to store page names paths

@@ -68,20 +68,28 @@ function List(){
         return newArr;
     }
 
-
-    this.print = function() {
+    this.iterate = function(func){
         let cur = this.head.next;
+        let i =0;
         while(cur != this.tail){
-            console.log(cur.element);
+            func(cur, i);
+            i++;
             cur = cur.next;
         }
+    }
+
+
+    this.print = function() {
+        this.iterate( function(node,i){
+            console.log(`${i}:${node.element}`);
+        });
     }
 }
 
 function makeList(arr){
     let newList = new List();
     for(let i =0;i<arr.length;i++){
-        newList.add(arr[i]);
+        newList.addB(arr[i]);
     }
     return newList;
 }
