@@ -82,6 +82,14 @@ function List(){
         }
     }
 
+    this.copy = function(){
+        let copyList = new List();
+        this.iterate( function(node, i){
+            copyList.addB(node.element);
+        })
+
+        return copyList;
+    }
 
     this.print = function() {
         this.iterate( function(node,i){
